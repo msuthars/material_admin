@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Implements hook_theme_suggestions_HOOK_alter().
- * @param array $suggestions
- * @param array $variables
+ * @file
+ * Suggestions for Material Admin.
  */
 
 /**
@@ -11,12 +10,15 @@
  */
 function material_admin_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   $route_match = \Drupal::routeMatch()->getRouteName();
-  $portal_paths = array('user.pass', 'user.login', 'user.register');
-  if (in_array($route_match, $portal_paths, true) && theme_get_setting('material_admin_portal_login')) {
+  $portal_paths = ['user.pass', 'user.login', 'user.register'];
+  if (in_array($route_match, $portal_paths, TRUE) && theme_get_setting('material_admin_portal_login')) {
     $suggestions[] = 'page__portal_login';
   }
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function material_admin_theme_suggestions_input_alter(&$suggestions, array $variables) {
   $element = $variables['element'];
   if (isset($element['#attributes']['data-twig-suggestion'])) {
@@ -24,7 +26,7 @@ function material_admin_theme_suggestions_input_alter(&$suggestions, array $vari
   }
 
   if (isset($variables['element']['#type']) && $variables['element']['#type'] == 'submit') {
-    // Paragraph button
+    // Paragraph button.
     if (isset($variables['element']['#paragraphs_mode'])) {
       $suggestions[] = 'input__submit__paragraphs_' . $variables['element']['#paragraphs_mode'];
     }
@@ -34,12 +36,15 @@ function material_admin_theme_suggestions_input_alter(&$suggestions, array $vari
   }
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
 function material_admin_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
-  if ( $variables['element']['#type'] === 'select') {
+  if ($variables['element']['#type'] === 'select') {
     $suggestions[] = $hook . '__select';
   }
 
-  if ( $variables['element']['#type'] === 'radio' || $variables['element']['#type'] === 'checkbox' ) {
+  if ($variables['element']['#type'] === 'radio' || $variables['element']['#type'] === 'checkbox') {
     $suggestions[] = 'form_element__wrapped';
   }
 }
@@ -48,7 +53,7 @@ function material_admin_theme_suggestions_form_element_alter(array &$suggestions
  * Implements hook_theme().
  */
 function material_admin_theme() {
-  $path = drupal_get_path('theme', 'material_admin');
+  $path = \Drupal::service('extension.path.resolver')->getPath('theme', 'material_admin');
   return [
     // Template suggestion for the breadcrumb page title placeholder.
     'page_title__breadcrumb' => [

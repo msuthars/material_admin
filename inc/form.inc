@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Material Admin theme's form handling.
+ */
+
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;

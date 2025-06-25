@@ -3,18 +3,19 @@
 use Drupal\Core\Render\Element;
 
 /**
- * Preprocess variables for all templates.
- * @param $variables
+ * @file
+ * Preprocess functions for material_admin theme.
  */
+
 /**
- * Implements hook_preprocess_html () for HTML document templates.
+ * Implements hook_preprocess_html().
  *
  * Adds overall theme class to the body.
  */
 function material_admin_preprocess_html(&$variables) {
   $route_match = \Drupal::routeMatch()->getRouteName();
   $variables['attributes']['class'][] = 'material_admin';
-  $portal_paths = array('user.pass', 'user.login', 'user.register');
+  $portal_paths = ['user.pass', 'user.login', 'user.register'];
   if (in_array($route_match, $portal_paths) && theme_get_setting('material_admin_portal_login')) {
     $variables['attributes']['class'][] = 'material_login';
   }
@@ -33,14 +34,15 @@ function material_admin_preprocess_page(&$variables) {
         $function = array_shift($lazy_builder);
         $args = array_shift($lazy_builder);
         $render = call_user_func_array($function, $args);
-        $variables['has_breadcrumbs'] = !empty(trim(strip_tags(Drupal::service('renderer')->render($render))));
+        $variables['has_breadcrumbs'] = !empty(trim(strip_tags(\Drupal::service('renderer')->render($render))));
       }
     }
   }
-  // Check if dblog is on - if so, provide a variable in @notification-drawer.html.twig
+  // Check if dblog is on - if so, provide a
+  // variable in @notification-drawer.html.twig
   // to conditionally provide a link to dblog overview.
   $moduleHandler = \Drupal::service('module_handler');
-  if ($moduleHandler->moduleExists('dblog')){
+  if ($moduleHandler->moduleExists('dblog')) {
     $variables['dblog_link'] = TRUE;
   }
 }
